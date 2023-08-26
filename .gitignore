@@ -1,3 +1,6 @@
 # ignore ALL .mtud files
 *.mtud
+# ignore ALL files in ANY directory named temp
+DefaultBuild/.
 
+QualityReport(Outdid_App,DefaultBuild)
