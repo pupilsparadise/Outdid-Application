@@ -54,7 +54,7 @@ Global variables and functions
 /* Start user code for global. Do not edit comment generated here */
 uint8_t result;
 char main_str[1] = 'a';
-char str_to_find[] = "hanuman";
+char str_to_find[] = "prsvin";
 /* End user code. Do not edit comment generated here */
 void R_MAIN_UserInit(void);
 
