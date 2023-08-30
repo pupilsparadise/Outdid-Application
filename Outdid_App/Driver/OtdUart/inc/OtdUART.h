@@ -38,7 +38,9 @@ Macro definitions (Register bit)
 /***********************************************************************************************************************
 Macro definitions
 ***********************************************************************************************************************/
-
+#define DEBUG_UART 	1U //only to transimit debug messages
+#define GSM_UART	2U //interface with GSM modem	
+#define INVALID_UART	3U //no UART selected
 /***********************************************************************************************************************
 Typedef definitions
 ***********************************************************************************************************************/
@@ -70,19 +72,34 @@ __inline Otd_Uart_Status OtdUart_Recieve(uint8_t *buf, uint16_t len)
 	return uart_status;	
 }
 //UART Tx
-__inline Otd_Uart_Status OtdUart_Send(uint8_t *buf, uint16_t len)
+__inline Otd_Uart_Status OtdUart_Send(uint8_t *buf, uint16_t len , uint8_t uart)
 {
 	Otd_Uart_Status uart_status = OTD_UART_STATUS_PASS;
 	
-	if(R_UART1_Send(buf,len) == MD_OK)
+	if(uart == GSM_UART)
 	{
-		uart_status = OTD_UART_STATUS_PASS;
+		if(R_UART1_Send(buf,len) == MD_OK)
+		{
+			uart_status = OTD_UART_STATUS_PASS;
+		}
+		else
+		{
+			uart_status = OTD_UART_STATUS_FAIL;
+		}
 	}
-	else
+	if(uart == DEBUG_UART)
 	{
-		uart_status = OTD_UART_STATUS_FAIL;
+		if(R_UART3_Send(buf,len) == MD_OK)
+		{
+			uart_status = OTD_UART_STATUS_PASS;
+		}
+		else
+		{
+			uart_status = OTD_UART_STATUS_FAIL;
+		}		
 	}
 	
+
 	return uart_status;
 }
 void OtdUart_CallbackSend(void);

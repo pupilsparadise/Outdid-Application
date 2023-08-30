@@ -34,19 +34,16 @@ Includes
 /***********************************************************************************************************************
 Pragma directive
 ***********************************************************************************************************************/
-#define DISABLE_INTERRUPT	1U /* disable INTST1 interrupt */
-#define ENABLE_INTERRUPT	0U  /* Enable INTSR1 interrupt */
+#define GSM_UART_INIT()		R_UART1_Start()
+#define DEBUG_UART_INIT()	R_UART3_Start()
 
-#define TX_INTERRUPT(STATE)     STMK1 = STATE    
-#define RX_INTERRUPT(STATE)	SRMK1 = STATE   
+#define GSM_UART_STOP()		R_UART1_Stop()
+#define DEBUG_UART_STOP()	R_UART3_Stop()
 
 volatile uint8_t rx_data;
 
-extern volatile uint8_t * gp_uart1_rx_address;        /* uart1 receive buffer address */
-extern volatile uint16_t  g_uart1_rx_count;            /* uart1 receive data number */
-
-extern uint8_t result;
-extern Circular_Buffer *debug_rx_ptr;
+extern uint8_t gsm_rx_data;
+extern OtdCircularBufferApp *gsm_rx_ptr;
 /***********************************************************************************************************************
 Global variables and functions
 ***********************************************************************************************************************/
@@ -57,8 +54,9 @@ Global variables and functions
  */
 void OtdUart_Init(void)
 {
-	R_UART1_Start();
-	OtdUart_Recieve(&result,1);	
+	GSM_UART_INIT();
+	DEBUG_UART_INIT();
+	OtdUart_Recieve(&gsm_rx_data,1);	
 }
 
 /** @brief Uart Disable
@@ -67,7 +65,8 @@ void OtdUart_Init(void)
  */
 void OtdUart_Disable(void)
 {
-	R_UART1_Stop();
+	GSM_UART_STOP();
+	DEBUG_UART_STOP();
 }
 
 /** @brief Uart Disable
@@ -84,6 +83,6 @@ void OtdUart_CallbackSend(void)
  */
 void OtdUart_CallbackRecieve(void)
 {
-	buff_store_char(result,debug_rx_ptr);
-	OtdUart_Recieve(&result,1);
+	OtdCircularBufferApp_BuffStoreChar(gsm_rx_data,gsm_rx_ptr);
+	OtdUart_Recieve(&gsm_rx_data,1);
 }

@@ -1,137 +1,13 @@
 QualityReport
-26 August 2023 11:43:59
+30 August 2023 22:32:52
 
 ------ Start build(Outdid_App, DefaultBuild) ------
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe Outdid_App\Driver\OtdUart\src\OtdUART.c -cpu=S3 -o DefaultBuild\OtdUART.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -g_line -I Outdid_App\Driver\OtdDelay\inc -I Outdid_App\Application\OtdCircularBuffer_App\inc -I . -I Outdid_App\Driver\OtdUart\inc -I Driver\OtdUart\Inc -I Driver\OtdSpi -I Driver\OtdUart -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_2370210f0faa4445b38713757ac590964sgi445r.3ae -msg_lang=english
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe r_cg_cgc_user.c -cpu=S3 -o DefaultBuild\r_cg_cgc_user.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -g_line -I Outdid_App\Driver\OtdDelay\inc -I Outdid_App\Application\OtdCircularBuffer_App\inc -I . -I Outdid_App\Driver\OtdUart\inc -I Driver\OtdUart\Inc -I Driver\OtdSpi -I Driver\OtdUart -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_1c5703a66da743799763e6faf7629e4ersbsmgyv.l2d -msg_lang=english
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe r_main.c -cpu=S3 -o DefaultBuild\r_main.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -g_line -I Outdid_App\Driver\OtdDelay\inc -I Outdid_App\Application\OtdCircularBuffer_App\inc -I . -I Outdid_App\Driver\OtdUart\inc -I Driver\OtdUart\Inc -I Driver\OtdSpi -I Driver\OtdUart -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_02a2e07012ca455e9ba1798b6febda66gx5rmnst.ocy -msg_lang=english
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe r_cg_timer.c -cpu=S3 -o DefaultBuild\r_cg_timer.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -g_line -I Outdid_App\Driver\OtdDelay\inc -I Outdid_App\Application\OtdCircularBuffer_App\inc -I . -I Outdid_App\Driver\OtdUart\inc -I Driver\OtdUart\Inc -I Driver\OtdSpi -I Driver\OtdUart -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_d1cf9f890e8f41c682b708e8d4178966rwg52bdc.kmn -msg_lang=english
-W0511106:The folder "Driver\OtdUart\Inc" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdSpi" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart" specified by the "-I" option is not found.
-W0511186:The evaluation period for the option "-Odefault" of CC-RL V1 is valid for the remaining 35 days. After that, it will be implicitly changed to "-Olite". Please consider purchasing the product to continue using "-Odefault". 
-W0511106:The folder "Driver\OtdUart\Inc" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdSpi" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart" specified by the "-I" option is not found.
-W0511186:The evaluation period for the option "-Odefault" of CC-RL V1 is valid for the remaining 35 days. After that, it will be implicitly changed to "-Olite". Please consider purchasing the product to continue using "-Odefault". 
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe r_cg_serial.c -cpu=S3 -o DefaultBuild\r_cg_serial.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -g_line -I Outdid_App\Driver\OtdDelay\inc -I Outdid_App\Application\OtdCircularBuffer_App\inc -I . -I Outdid_App\Driver\OtdUart\inc -I Driver\OtdUart\Inc -I Driver\OtdSpi -I Driver\OtdUart -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_7d77338273dd4fadb30a63648c32860egcy15m1r.jwv -msg_lang=english
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(18):W0520301:Typedef name has already been declared (with same type)
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(19):W0520301:Typedef name has already been declared (with same type)
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(20):W0520301:Typedef name has already been declared (with same type)
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(25):W0520301:Typedef name has already been declared (with same type)
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(26):W0520301:Typedef name has already been declared (with same type)
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(27):W0520301:Typedef name has already been declared (with same type)
-r_main.c(56):W0520520:Initialization with "{...}" expected for aggregate object
-W0511106:The folder "Driver\OtdUart\Inc" specified by the "-I" option is not found.
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe r_systeminit.c -cpu=S3 -o DefaultBuild\r_systeminit.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -g_line -I Outdid_App\Driver\OtdDelay\inc -I Outdid_App\Application\OtdCircularBuffer_App\inc -I . -I Outdid_App\Driver\OtdUart\inc -I Driver\OtdUart\Inc -I Driver\OtdSpi -I Driver\OtdUart -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_5b97ea283dfc4751bc287352b5f90a94cto5ry4g.dbh -msg_lang=english
-W0511106:The folder "Driver\OtdSpi" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart" specified by the "-I" option is not found.
-W0511186:The evaluation period for the option "-Odefault" of CC-RL V1 is valid for the remaining 35 days. After that, it will be implicitly changed to "-Olite". Please consider purchasing the product to continue using "-Odefault". 
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe r_cg_timer_user.c -cpu=S3 -o DefaultBuild\r_cg_timer_user.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -g_line -I Outdid_App\Driver\OtdDelay\inc -I Outdid_App\Application\OtdCircularBuffer_App\inc -I . -I Outdid_App\Driver\OtdUart\inc -I Driver\OtdUart\Inc -I Driver\OtdSpi -I Driver\OtdUart -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_1a5cf4543ad9406384d1c3108267457cvjqdrdmq.0f0 -msg_lang=english
-W0511106:The folder "Driver\OtdUart\Inc" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdSpi" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart" specified by the "-I" option is not found.
-W0511186:The evaluation period for the option "-Odefault" of CC-RL V1 is valid for the remaining 35 days. After that, it will be implicitly changed to "-Olite". Please consider purchasing the product to continue using "-Odefault". 
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe r_cg_serial_user.c -cpu=S3 -o DefaultBuild\r_cg_serial_user.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -g_line -I Outdid_App\Driver\OtdDelay\inc -I Outdid_App\Application\OtdCircularBuffer_App\inc -I . -I Outdid_App\Driver\OtdUart\inc -I Driver\OtdUart\Inc -I Driver\OtdSpi -I Driver\OtdUart -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_8eed7084e49241a28a7b1629f8d8f854udmm3a3s.asr -msg_lang=english
-W0511106:The folder "Driver\OtdUart\Inc" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdSpi" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart" specified by the "-I" option is not found.
-W0511186:The evaluation period for the option "-Odefault" of CC-RL V1 is valid for the remaining 35 days. After that, it will be implicitly changed to "-Olite". Please consider purchasing the product to continue using "-Odefault". 
-W0511106:The folder "Driver\OtdUart\Inc" specified by the "-I" option is not found.
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe stkinit.asm -cpu=S3 -o DefaultBuild\stkinit.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_e6a9380524ef4c61ab05138be30bf0d3emsghx1w.hxw -msg_lang=english
-W0511106:The folder "Driver\OtdSpi" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart" specified by the "-I" option is not found.
-W0511186:The evaluation period for the option "-Odefault" of CC-RL V1 is valid for the remaining 35 days. After that, it will be implicitly changed to "-Olite". Please consider purchasing the product to continue using "-Odefault". 
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe r_cg_cgc.c -cpu=S3 -o DefaultBuild\r_cg_cgc.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -g_line -I Outdid_App\Driver\OtdDelay\inc -I Outdid_App\Application\OtdCircularBuffer_App\inc -I . -I Outdid_App\Driver\OtdUart\inc -I Driver\OtdUart\Inc -I Driver\OtdSpi -I Driver\OtdUart -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_41612cc3a20a41459945ed2ec81088b3maum5mjo.rtl -msg_lang=english
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe Outdid_App\Driver\OtdDelay\src\OtdDelay.c -cpu=S3 -o DefaultBuild\OtdDelay.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -g_line -I Outdid_App\Driver\OtdDelay\inc -I Outdid_App\Application\OtdCircularBuffer_App\inc -I . -I Outdid_App\Driver\OtdUart\inc -I Driver\OtdUart\Inc -I Driver\OtdSpi -I Driver\OtdUart -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_4b5b32c1fbbc4be18489f185682a70afw5p4ywps.j41 -msg_lang=english
-W0511106:The folder "Driver\OtdUart\Inc" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdSpi" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart" specified by the "-I" option is not found.
-W0511186:The evaluation period for the option "-Odefault" of CC-RL V1 is valid for the remaining 35 days. After that, it will be implicitly changed to "-Olite". Please consider purchasing the product to continue using "-Odefault". 
-W0511106:The folder "Driver\OtdUart\Inc" specified by the "-I" option is not found.
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe Outdid_App\Application\OtdCircularBuffer_App\src\OtdCircularBuffer_App.c -cpu=S3 -o DefaultBuild\OtdCircularBuffer_App.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -g_line -I Outdid_App\Driver\OtdDelay\inc -I Outdid_App\Application\OtdCircularBuffer_App\inc -I . -I Outdid_App\Driver\OtdUart\inc -I Driver\OtdUart\Inc -I Driver\OtdSpi -I Driver\OtdUart -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_fbd1ab13c13f4913bbc708ed6aff13fa2g4eegbi.uo5 -msg_lang=english
-W0511106:The folder "Driver\OtdSpi" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart" specified by the "-I" option is not found.
-W0511186:The evaluation period for the option "-Odefault" of CC-RL V1 is valid for the remaining 35 days. After that, it will be implicitly changed to "-Olite". Please consider purchasing the product to continue using "-Odefault". 
-W0511106:The folder "Driver\OtdUart\Inc" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdSpi" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart" specified by the "-I" option is not found.
-W0511186:The evaluation period for the option "-Odefault" of CC-RL V1 is valid for the remaining 35 days. After that, it will be implicitly changed to "-Olite". Please consider purchasing the product to continue using "-Odefault". 
-G:\Outdid\Outdid_Workspace\Outdid_App\r_cg_macrodriver.h(74):W0520301:Typedef name has already been declared (with same type)
-G:\Outdid\Outdid_Workspace\Outdid_App\r_cg_macrodriver.h(75):W0520301:Typedef name has already been declared (with same type)
-G:\Outdid\Outdid_Workspace\Outdid_App\r_cg_macrodriver.h(76):W0520301:Typedef name has already been declared (with same type)
-G:\Outdid\Outdid_Workspace\Outdid_App\r_cg_macrodriver.h(77):W0520301:Typedef name has already been declared (with same type)
-G:\Outdid\Outdid_Workspace\Outdid_App\r_cg_macrodriver.h(78):W0520301:Typedef name has already been declared (with same type)
-G:\Outdid\Outdid_Workspace\Outdid_App\r_cg_macrodriver.h(79):W0520301:Typedef name has already been declared (with same type)
-Outdid_App\Application\OtdCircularBuffer_App\src\OtdCircularBuffer_App.c(80):W0520940:Missing return statement at end of non-void function "buffer_clear"
-W0511106:The folder "Driver\OtdUart\Inc" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart\Inc" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdSpi" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdSpi" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart" specified by the "-I" option is not found.
-W0511106:The folder "Driver\OtdUart" specified by the "-I" option is not found.
-W0511186:The evaluation period for the option "-Odefault" of CC-RL V1 is valid for the remaining 35 days. After that, it will be implicitly changed to "-Olite". Please consider purchasing the product to continue using "-Odefault". 
-W0511186:The evaluation period for the option "-Odefault" of CC-RL V1 is valid for the remaining 35 days. After that, it will be implicitly changed to "-Olite". Please consider purchasing the product to continue using "-Odefault". 
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(18):W0520301:Typedef name has already been declared (with same type)
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\ccrl.exe cstart.asm -cpu=S3 -o DefaultBuild\cstart.obj "-dev=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF" -g -c -MAKEUD=DefaultBuild -exec_time=C:\Users\pc\AppData\Local\Temp\CSPlusBuildTool_d85c1d7266084319867b253f55a50cf6gni113fo.v0k -msg_lang=english
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(19):W0520301:Typedef name has already been declared (with same type)
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(20):W0520301:Typedef name has already been declared (with same type)
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(25):W0520301:Typedef name has already been declared (with same type)
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(26):W0520301:Typedef name has already been declared (with same type)
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\inc\stdint.h(27):W0520301:Typedef name has already been declared (with same type)
-C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\Bin\rlink.exe -MAKEUD=DefaultBuild\Outdid_App.lk.ud -subcommand=DefaultBuild\Outdid_App.clnk
-W0561018:The evaluation period of CC-RL V1 is valid for the remaining 35 days. After that, functional limit will be applied. Please consider purchasing the product.
-W0561018:The evaluation period of CC-RL V1 is valid for the remaining 35 days. After that, functional limit will be applied. Please consider purchasing the product.
-Renesas Optimizing Linker Completed
------- Build ended(Error:0, Warning:66)(Outdid_App, DefaultBuild) ------
-
---- CommandFile 1 ---
-DefaultBuild\Outdid_App.clnk :
--Input=DefaultBuild\cstart.obj
--Input=DefaultBuild\stkinit.obj
--Input=DefaultBuild\OtdUART.obj
--Input=DefaultBuild\r_main.obj
--Input=DefaultBuild\r_systeminit.obj
--Input=DefaultBuild\r_cg_cgc.obj
--Input=DefaultBuild\r_cg_cgc_user.obj
--Input=DefaultBuild\r_cg_serial.obj
--Input=DefaultBuild\r_cg_serial_user.obj
--Input=DefaultBuild\OtdCircularBuffer_App.obj
--Input=DefaultBuild\r_cg_timer.obj
--Input=DefaultBuild\r_cg_timer_user.obj
--Input=DefaultBuild\OtdDelay.obj
--SECURITY_ID=00000000000000000000
--DEVICE=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF
--DEBug
--NOCOmpress
--NOOPtimize
--OUtput=DefaultBuild\Outdid_App.abs
--LIBrary=C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\lib\rl78em4s.lib
--LIBrary=C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\lib\malloc_n.lib
--LIBrary=C:\Program Files (x86)\Renesas Electronics\CS+\CC\CC-RL\V1.12.01\lib\rl78em4r.lib
--OCDBG=84
--DEBUG_MONITOR=7FE00-7FFFF
--USER_OPT_BYTE=EFFFF8
--OCDTR
--LISt=DefaultBuild\Outdid_App.map
--AUTO_SECTION_LAYOUT
--ROm=.data=.dataR
--ROm=.sdata=.sdataR
--NOMessage
--MEMory=High
--NOLOgo
--end
--Input=DefaultBuild\Outdid_App.abs
--DEVICE=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF
--OUtput=DefaultBuild\Outdid_App.mot
--FOrm=Stype
--NOMessage
--exit
+------ Build ended(Error:0, Warning:0)(Outdid_App, DefaultBuild) ------
 
 
 --- SHA1 hash value of output files ---
-G:\Outdid\Outdid_Workspace\Outdid_App\DefaultBuild\Outdid_App.abs: ccde28a0b0bd02c0786f69b4ac7a5e7c7747c8ec
-G:\Outdid\Outdid_Workspace\Outdid_App\DefaultBuild\Outdid_App.mot: 98947f6723dead89c70baea021cd00e4b1b20889
+G:\Outdid\Outdid_Workspace\Outdid-Application\DefaultBuild\Outdid_App.abs: 09749be00d8f83a4562eec51c56239f57294c7ad
+G:\Outdid\Outdid_Workspace\Outdid-Application\DefaultBuild\Outdid_App.mot: 78dca14026770387a8ccbe8ce68968c99101208a
 
 
 --- System Information ---
@@ -140,7 +16,7 @@ G:\Outdid\Outdid_Workspace\Outdid_App\DefaultBuild\Outdid_App.mot: 98947f6723dea
 *Language
  English (United States)
 *.NET Framework Version
- Microsoft .NET Framework 4 [.NET 4.8 or later] (528372)
+ Microsoft .NET Framework 4 [.NET 4.8 or later] (533325)
 
 --- Application Information ---
 *Product Name
@@ -159,13 +35,13 @@ G:\Outdid\Outdid_Workspace\Outdid_App\DefaultBuild\Outdid_App.mot: 98947f6723dea
  C:\Program Files (x86)\Renesas Electronics\CS+\CC
 *Memory Usage
  *Private Working Set
-  251 MB
+  376 MB
  *Number of GDI Objects
-  2091
+  2438
  *Number of USER Objects
-  1155
+  1350
  *Opened Files
-  2 editors, 2 files, 8 KB
+  8 editors, 8 files, 46 KB
 
 --- Build Tool Plug-in Information ---
 RH850 Build tool CC-RH Plug-in
@@ -294,7 +170,7 @@ Device Information Common Interface
   DeviceInformation.dll
 
 --- Main Project Information ---
-G:\Outdid\Outdid_Workspace\Outdid_App\Outdid_App.mtpj
+G:\Outdid\Outdid_Workspace\Outdid-Application\Outdid_App.mtpj
 Microcontroller Information
  *R5F104ML
   *File Name: Version

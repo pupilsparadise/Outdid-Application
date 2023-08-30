@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for Serial module.
-* Creation Date: 21-08-2023
+* Creation Date: 30-08-2023
 ***********************************************************************************************************************/
 
 #ifndef SERIAL_H
@@ -375,6 +375,7 @@ Macro definitions
 ***********************************************************************************************************************/
 #define _CE00_UART1_RECEIVE_DIVISOR      (0xCE00U)
 #define _CE00_UART1_TRANSMIT_DIVISOR     (0xCE00U)
+#define _CE00_UART3_TRANSMIT_DIVISOR     (0xCE00U)
 
 /***********************************************************************************************************************
 Typedef definitions
@@ -393,6 +394,12 @@ static void r_uart1_callback_error(uint8_t err_type);
 static void r_uart1_callback_receiveend(void);
 static void r_uart1_callback_sendend(void);
 static void r_uart1_callback_softwareoverrun(uint16_t rx_data);
+void R_SAU1_Create(void);
+void R_UART3_Create(void);
+void R_UART3_Start(void);
+void R_UART3_Stop(void);
+MD_STATUS R_UART3_Send(uint8_t * const tx_buf, uint16_t tx_num);
+static void r_uart3_callback_sendend(void);
 
 /* Start user code for function. Do not edit comment generated here */
 /* End user code. Do not edit comment generated here */

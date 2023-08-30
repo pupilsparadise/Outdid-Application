@@ -1,23 +1,21 @@
 #include <stdint.h>
 
-#define UART_BUFFER_SIZE 	512
+#define GSM_UART_BUFFER_SIZE 	512
 #define INIT_VAL		0
-
-typedef uint8_t portType;
 
 typedef struct
 {
-	unsigned char buffer[UART_BUFFER_SIZE];
+	unsigned char buffer[GSM_UART_BUFFER_SIZE];
 	volatile uint16_t head;
 	volatile uint16_t tail;
-}Circular_Buffer;
+}OtdCircularBufferApp;
 
-void CircularBuffer_init(void);
+void OtdCircularBufferApp_Init(void);
 
-int8_t find_str(char *substring, char *mainstring);
+int8_t OtdCircularBufferApp_FindStr(char *substring, char *mainstring);
 
-void buffer_send_string(const char *s, portType uart);
+void OtdCircularBufferApp_BufferSendString(const char *s, uint8_t uart);
 
-void buff_store_char(unsigned char c, Circular_Buffer *buffer);
+void OtdCircularBufferApp_BuffStoreChar(unsigned char c, OtdCircularBufferApp *buffer);
 
-int8_t is_response(char *str);
+int8_t OtdCircularBufferApp_IsResponse(char *str);

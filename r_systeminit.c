@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements system initializing function.
-* Creation Date: 21-08-2023
+* Creation Date: 30-08-2023
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -62,6 +62,7 @@ void R_Systeminit(void)
     R_CGC_Get_ResetSource();
     R_CGC_Create();
     R_SAU0_Create();
+    R_SAU1_Create();
     R_TAU0_Create();
     IAWCTL = 0x00U;
 }

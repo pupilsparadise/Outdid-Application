@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements main function.
-* Creation Date: 21-08-2023
+* Creation Date: 30-08-2023
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -52,7 +52,7 @@ Pragma directive
 Global variables and functions
 ***********************************************************************************************************************/
 /* Start user code for global. Do not edit comment generated here */
-uint8_t result;
+uint8_t gsm_rx_data;
 char main_str[1] = 'a';
 char str_to_find[] = "hanuman";
 /* End user code. Do not edit comment generated here */
@@ -70,18 +70,19 @@ void main(void)
     /* Start user code. Do not edit comment generated here */
 
 	OtdDelay_Start();
-	CircularBuffer_init();
-	//OtdUart_Recieve(&result,1);
+	OtdCircularBufferApp_Init();
+	//OtdUart_Recieve(&gsm_rx_data,1);
 
 	while (1U)
 	{
 		//OtdUart_Send((uint8_t *__near)main_str,1);
-		//OtdUart_Recieve(&result,1);
+		//OtdUart_Recieve(&gsm_rx_data,1);
 		//buffer_send_string("AT\r\n",0);
 
 		//while(!is_response("OK\r\n")){};
 
-		buffer_send_string("Verified\n\r",0);
+		OtdCircularBufferApp_BufferSendString("Verified\n\r",GSM_UART);
+		OtdCircularBufferApp_BufferSendString("debug>> jai sri ram\n",DEBUG_UART);
 		OtdDelay_ms(1000);
 	}
 	/* End user code. Do not edit comment generated here */

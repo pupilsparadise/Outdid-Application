@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for Serial module.
-* Creation Date: 21-08-2023
+* Creation Date: 30-08-2023
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -41,8 +41,10 @@ Pragma directive
 ***********************************************************************************************************************/
 #pragma interrupt r_uart1_interrupt_send(vect=INTST1)
 #pragma interrupt r_uart1_interrupt_receive(vect=INTSR1)
+#pragma interrupt r_uart3_interrupt_send(vect=INTST3)
 /* Start user code for pragma. Do not edit comment generated here */
-uint8_t tx_pending = 0;//status for confirm all bytes have transmitted
+uint8_t gsm_tx_pending = 0;//status for confirm all bytes have transmitted
+uint8_t debug_tx_pending = 0;//status for confirm all bytes have transmitted
 /* End user code. Do not edit comment generated here */
 
 /***********************************************************************************************************************
@@ -53,6 +55,11 @@ extern volatile uint16_t  g_uart1_tx_count;            /* uart1 send data number
 extern volatile uint8_t * gp_uart1_rx_address;         /* uart1 receive buffer address */
 extern volatile uint16_t  g_uart1_rx_count;            /* uart1 receive data number */
 extern volatile uint16_t  g_uart1_rx_length;           /* uart1 receive data length */
+extern volatile uint8_t * gp_uart3_tx_address;         /* uart3 send buffer address */
+extern volatile uint16_t  g_uart3_tx_count;            /* uart3 send data number */
+extern volatile uint8_t * gp_uart3_rx_address;         /* uart3 receive buffer address */
+extern volatile uint16_t  g_uart3_rx_count;            /* uart3 receive data number */
+extern volatile uint16_t  g_uart3_rx_length;           /* uart3 receive data length */
 /* Start user code for global. Do not edit comment generated here */
 /* End user code. Do not edit comment generated here */
 
@@ -150,7 +157,7 @@ static void r_uart1_callback_sendend(void)
 {
     /* Start user code. Do not edit comment generated here */
     	//flag set - all data has transmitted
-	tx_pending = 1;
+	gsm_tx_pending = 1;
     /* End user code. Do not edit comment generated here */
 }
 
@@ -164,6 +171,39 @@ static void r_uart1_callback_sendend(void)
 static void r_uart1_callback_error(uint8_t err_type)
 {
     /* Start user code. Do not edit comment generated here */
+    /* End user code. Do not edit comment generated here */
+}
+
+/***********************************************************************************************************************
+* Function Name: r_uart3_interrupt_send
+* Description  : This function is INTST3 interrupt service routine.
+* Arguments    : None
+* Return Value : None
+***********************************************************************************************************************/
+static void __near r_uart3_interrupt_send(void)
+{
+    if (g_uart3_tx_count > 0U)
+    {
+        TXD3 = *gp_uart3_tx_address;
+        gp_uart3_tx_address++;
+        g_uart3_tx_count--;
+    }
+    else
+    {
+        r_uart3_callback_sendend();
+    }
+}
+
+/***********************************************************************************************************************
+* Function Name: r_uart3_callback_sendend
+* Description  : This function is a callback function when UART3 finishes transmission.
+* Arguments    : None
+* Return Value : None
+***********************************************************************************************************************/
+static void r_uart3_callback_sendend(void)
+{
+    /* Start user code. Do not edit comment generated here */
+    debug_tx_pending = 1;//flag set - all data has transmitted
     /* End user code. Do not edit comment generated here */
 }
 
