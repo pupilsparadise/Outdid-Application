@@ -1,13 +1,13 @@
 QualityReport
-30 August 2023 22:32:52
+13 September 2023 23:59:45
 
 ------ Start build(Outdid_App, DefaultBuild) ------
 ------ Build ended(Error:0, Warning:0)(Outdid_App, DefaultBuild) ------
 
 
 --- SHA1 hash value of output files ---
-G:\Outdid\Outdid_Workspace\Outdid-Application\DefaultBuild\Outdid_App.abs: 09749be00d8f83a4562eec51c56239f57294c7ad
-G:\Outdid\Outdid_Workspace\Outdid-Application\DefaultBuild\Outdid_App.mot: 78dca14026770387a8ccbe8ce68968c99101208a
+G:\Outdid\Outdid_Workspace\Outdid-Application\DefaultBuild\Outdid_App.abs: 884731b460df6e69630b2a34818f1734f2b75d77
+G:\Outdid\Outdid_Workspace\Outdid-Application\DefaultBuild\Outdid_App.mot: 2379d109b7555bcd4b158be00682ce8ac9cfb68a
 
 
 --- System Information ---
@@ -35,13 +35,13 @@ G:\Outdid\Outdid_Workspace\Outdid-Application\DefaultBuild\Outdid_App.mot: 78dca
  C:\Program Files (x86)\Renesas Electronics\CS+\CC
 *Memory Usage
  *Private Working Set
-  376 MB
+  377 MB
  *Number of GDI Objects
-  2438
+  2257
  *Number of USER Objects
-  1350
+  1344
  *Opened Files
-  8 editors, 8 files, 46 KB
+  7 editors, 7 files, 31 KB
 
 --- Build Tool Plug-in Information ---
 RH850 Build tool CC-RH Plug-in

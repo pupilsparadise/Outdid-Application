@@ -38,6 +38,14 @@
               <Path>Outdid_App\Application\OtdCircularBuffer_App\src\OtdCircularBuffer_App.c</Path>
             </Category>
           </Category>
+          <Category Name="OtdGsm_App">
+            <Category Name="inc">
+              <Path>Outdid_App\Application\OtdGsm_App\inc\OtdGsm_App.h</Path>
+            </Category>
+            <Category Name="src">
+              <Path>Outdid_App\Application\OtdGsm_App\src\OtdGsm_App.c</Path>
+            </Category>
+          </Category>
         </Category>
         <Category Name="Test" />
       </Category>
@@ -80,8 +88,10 @@
           <Path>DefaultBuild\r_cg_timer.obj</Path>
           <Path>DefaultBuild\r_cg_timer_user.obj</Path>
           <Path>DefaultBuild\OtdDelay.obj</Path>
+          <Path>DefaultBuild\OtdGsm_App.obj</Path>
         </LinkOrder>
         <CommonOptions>
+          <IncludePathForC>Outdid_App\Application\OtdGsm_App\inc</IncludePathForC>
           <IncludePathForC>Outdid_App\Driver\OtdDelay\inc</IncludePathForC>
           <IncludePathForC>Outdid_App\Application\OtdCircularBuffer_App\inc</IncludePathForC>
           <IncludePathForC>.</IncludePathForC>
@@ -99,6 +109,7 @@
           <Option>-dev=%MicomToolPath%\Device\RL78\Devicefile\DR5F104ML.DVF</Option>
           <Option>-g</Option>
           <Option>-g_line</Option>
+          <Option>-I Outdid_App\Application\OtdGsm_App\inc</Option>
           <Option>-I Outdid_App\Driver\OtdDelay\inc</Option>
           <Option>-I Outdid_App\Application\OtdCircularBuffer_App\inc</Option>
           <Option>-I .</Option>
@@ -1898,6 +1909,7 @@
     &lt;/FUNC&gt;
     &lt;TAG&gt;
       &lt;GlobleUserTag&gt;
+        &lt;cg_security4 Name="cg_security4" Value="00" /&gt;
         &lt;cg_security9 Name="cg_security9" Value="00" /&gt;
         &lt;cg_security7 Name="cg_security7" Value="00" /&gt;
         &lt;pior1_value Name="pior1_value" Value="00" /&gt;
@@ -1908,7 +1920,6 @@
         &lt;cg_security1 Name="cg_security1" Value="00" /&gt;
         &lt;cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" /&gt;
         &lt;clock_option Name="clock_option" Value="F8" /&gt;
-        &lt;cg_security2 Name="cg_security2" Value="00" /&gt;
         &lt;pior_value Name="pior_value" Value="00" /&gt;
         &lt;cg_option Name="cg_option" Value="84" /&gt;
         &lt;cg_security8 Name="cg_security8" Value="00" /&gt;
@@ -1916,7 +1927,7 @@
         &lt;ocdstart Name="ocdstart" Value="7FE00" /&gt;
         &lt;cg_pms_value Name="cg_pms_value" Value="00" /&gt;
         &lt;cg_onchip Name="cg_onchip" Value="" /&gt;
-        &lt;cg_security4 Name="cg_security4" Value="00" /&gt;
+        &lt;cg_security2 Name="cg_security2" Value="00" /&gt;
         &lt;cg_iawctl_value Name="cg_iawctl_value" Value="00" /&gt;
         &lt;gtraceused Name="gtraceused" Value="" /&gt;
         &lt;lvi_option Name="lvi_option" Value="FF" /&gt;
@@ -2724,7 +2735,7 @@
           &lt;setting name="Transmit_end_callback_function" value="generated" /&gt;
           &lt;setting name="Transmit_end_interrupt_priority" value="3" /&gt;
           &lt;setting name="Receive_error_interrupt_priority" value="3" /&gt;
-          &lt;setting name="Receive_end_interrupt_priority" value="3" /&gt;
+          &lt;setting name="Receive_end_interrupt_priority" value="0" /&gt;
           &lt;setting name="Reveive_Data_Level" value="Normal" /&gt;
           &lt;setting name="Receive_error_interrupt" value="not used" /&gt;
         &lt;/Both_UART1&gt;

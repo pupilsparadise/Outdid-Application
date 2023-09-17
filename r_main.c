@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements main function.
-* Creation Date: 30-08-2023
+* Creation Date: 12-09-2023
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -68,22 +68,15 @@ void main(void)
 {
     R_MAIN_UserInit();
     /* Start user code. Do not edit comment generated here */
-
+	//main init part
 	OtdDelay_Start();
 	OtdCircularBufferApp_Init();
 	//OtdUart_Recieve(&gsm_rx_data,1);
 
 	while (1U)
 	{
-		//OtdUart_Send((uint8_t *__near)main_str,1);
-		//OtdUart_Recieve(&gsm_rx_data,1);
-		//buffer_send_string("AT\r\n",0);
-
-		//while(!is_response("OK\r\n")){};
-
-		OtdCircularBufferApp_BufferSendString("Verified\n\r",GSM_UART);
-		OtdCircularBufferApp_BufferSendString("debug>> jai sri ram\n",DEBUG_UART);
-		OtdDelay_ms(1000);
+		OtdGsmApp_MainProcessATCmd();
+		//OtdDelay_ms(1000);
 	}
 	/* End user code. Do not edit comment generated here */
 }

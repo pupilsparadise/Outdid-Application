@@ -33,6 +33,7 @@ Includes
 /***********************************************************************************************************************
 Pragma directive
 ***********************************************************************************************************************/
+volatile uint16_t time_out = 0;
 volatile static uint16_t delay_cnt = 0;
 /***********************************************************************************************************************
 Global variables and functions
@@ -67,4 +68,10 @@ void OtdDelay_ms(uint16_t delay_ms)
 void OtdDelay_Callback1ms(void)
 {
 	delay_cnt++;
+	time_out++;
+}
+
+uint16_t OtdDelay_GetTicks(void)
+{
+	return time_out;
 }

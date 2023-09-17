@@ -54,11 +54,11 @@ int8_t OtdCircularBufferApp_FindStr(char *substring, char *mainstring)
 	}
 	if(j == l)
 	{
-		return 1;
+		return OtdCircularBufferApp_Pass;
 	}
 	else
 	{
-		return 2;
+		return OtdCircularBufferApp_Failed;
 	}
 	
 }
@@ -77,17 +77,18 @@ uint16_t OtdCircularBufferApp_BufferClear(uint8_t uart)
 	}
 }
 
-uint16_t OtdCircularBufferApp_BufferPeek(uint8_t uart)
+uint16_t OtdCircularBufferApp_BufferPeek(unsigned char *c,uint8_t uart)
 {
 	if(uart == GSM_UART)
 	{
 		if(gsm_rx_ptr->head == gsm_rx_ptr->tail)
 		{
-			return 2;
+			return OtdCircularBufferApp_Failed;
 		}
 		else
 		{
-			return gsm_rx_ptr->buffer[gsm_rx_ptr->tail];
+			*c = gsm_rx_ptr->buffer[gsm_rx_ptr->tail];
+			return OtdCircularBufferApp_Pass;
 		}
 	}
 	else
@@ -96,20 +97,19 @@ uint16_t OtdCircularBufferApp_BufferPeek(uint8_t uart)
 	}
 }
 
-uint16_t OtdCircularBufferApp_BufferRead(uint8_t uart)
+static uint16_t OtdCircularBufferApp_BufferRead(unsigned char *c,uint8_t uart)
 {
-	unsigned char c ;
 	if(uart == GSM_UART)
 	{
 		if(gsm_rx_ptr->head == gsm_rx_ptr->tail)
 		{
-			return 2;
+			return OtdCircularBufferApp_Failed;
 		}
 		else
 		{
-			c = gsm_rx_ptr->buffer[gsm_rx_ptr->tail];
+			*c = gsm_rx_ptr->buffer[gsm_rx_ptr->tail];
 			gsm_rx_ptr->tail = (uint16_t)(gsm_rx_ptr->tail + 1) % GSM_UART_BUFFER_SIZE;
-			return c;
+			return OtdCircularBufferApp_Pass;
 		}
 	}
 	else
@@ -117,10 +117,10 @@ uint16_t OtdCircularBufferApp_BufferRead(uint8_t uart)
 		return INVALID_UART;
 	}
 }
-
+ 
 void OtdCircularBufferApp_BufferSendString(const char *s, uint8_t uart)
 {
-	if(uart == GSM_UART)
+	/*if(uart == GSM_UART)
 	{
 		while(*s != '\0')
 		{
@@ -138,7 +138,7 @@ void OtdCircularBufferApp_BufferSendString(const char *s, uint8_t uart)
 			while(!debug_tx_pending);
 			debug_tx_pending = 0;
 		}
-	}
+	}*/
 }
 
 uint16_t OtdCircularBufferApp_IsData(uint8_t uart)
@@ -163,46 +163,64 @@ void gsm_rx_uart_callback(void)
 /*Function to get the position for the first character of a string in buffer*/
 void OtdCircularBufferApp_GetFirstChar(char *str)
 {
+	volatile unsigned char c;
+	volatile OtdCircularBufferApp_ErrorState status_err = OtdCircularBufferApp_Failed;
 	/*make sure there is data in the buffer*/
-	while(!OtdCircularBufferApp_IsData(GSM_UART)){}
+	//while(!OtdCircularBufferApp_IsData(GSM_UART)){} //this will be checked before calling 
 	
-	while(OtdCircularBufferApp_BufferPeek(GSM_UART)!= str[0])
+	//while(OtdCircularBufferApp_BufferPeek(GSM_UART)!= str[0])
+	//if(OtdCircularBufferApp_BufferPeek(GSM_UART)!= str[0])
+	status_err = OtdCircularBufferApp_BufferPeek(&c,GSM_UART);
+	if((c != str[0]) && (status_err == OtdCircularBufferApp_Pass))
 	{
 		gsm_rx_ptr->tail = (uint16_t)(gsm_rx_ptr->tail + 1) % GSM_UART_BUFFER_SIZE;
-		while(!OtdCircularBufferApp_IsData(GSM_UART)){}
+		//while(!OtdCircularBufferApp_IsData(GSM_UART)){}
 	}
 }
-
-int8_t OtdCircularBufferApp_IsResponse(char *str)
+volatile OtdCircularBufferApp_ErrorState status;
+OtdCircularBufferApp_ErrorState OtdCircularBufferApp_IsResponse(char *str)
 {
-	int curr_pos = 0;
-	int len = strlen(str);
+	uint16_t curr_pos = 0;
+	uint16_t len = strlen(str);
+	volatile unsigned char c = 0;
+	status = OtdCircularBufferApp_Pass;
 
-	while( curr_pos != len)
+	
+
+	while((curr_pos != len) && (status == OtdCircularBufferApp_Pass))
 	{
 		curr_pos = 0;
 		OtdCircularBufferApp_GetFirstChar(str);
-
-		while(OtdCircularBufferApp_BufferPeek(GSM_UART) == str[curr_pos])
+		
+		status = OtdCircularBufferApp_BufferPeek(&c,GSM_UART);
+		
+		if(status == OtdCircularBufferApp_Pass)
 		{
-			curr_pos++;
-
-			OtdCircularBufferApp_BufferRead(GSM_UART);
-
-			if(curr_pos == len)
+			//while((OtdCircularBufferApp_BufferPeek(GSM_UART) == str[curr_pos]) && (status == OtdCircularBufferApp_Pass))
+			while((c == str[curr_pos]) && (status == OtdCircularBufferApp_Pass))
 			{
-				return 1;
-			}
+				curr_pos++;
 
-			while(!OtdCircularBufferApp_IsData(GSM_UART)){}
+				status = OtdCircularBufferApp_BufferRead(&c,GSM_UART);
+
+				if(curr_pos == len)
+				{
+					return OtdCircularBufferApp_Pass;
+				}
+
+				//while(!OtdCircularBufferApp_IsData(GSM_UART)){}
+				status = OtdCircularBufferApp_BufferPeek(&c,GSM_UART);
+			}		
 		}
+
+		
 	}
 	if(curr_pos == len)
 	{
-		return 1;
+		return OtdCircularBufferApp_Pass;
 	}
 	else
 	{
-		return -1;
+		return OtdCircularBufferApp_Failed;
 	}
 }

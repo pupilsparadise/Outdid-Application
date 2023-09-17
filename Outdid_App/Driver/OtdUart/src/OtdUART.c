@@ -41,8 +41,10 @@ Pragma directive
 #define DEBUG_UART_STOP()	R_UART3_Stop()
 
 volatile uint8_t rx_data;
+volatile uint8_t rx_flag = 0;
 
 extern uint8_t gsm_rx_data;
+extern uint8_t debug_tx_pending;
 extern OtdCircularBufferApp *gsm_rx_ptr;
 /***********************************************************************************************************************
 Global variables and functions
@@ -85,4 +87,44 @@ void OtdUart_CallbackRecieve(void)
 {
 	OtdCircularBufferApp_BuffStoreChar(gsm_rx_data,gsm_rx_ptr);
 	OtdUart_Recieve(&gsm_rx_data,1);
+}
+
+Otd_Uart_Status OtdUart_Send(uint8_t *buf, uint16_t len , uint8_t uart)
+{
+	Otd_Uart_Status uart_status = OTD_UART_STATUS_PASS;
+	
+	if(uart == GSM_UART)
+	{
+		if(R_UART1_Send(buf,len) == MD_OK)
+		{
+			uart_status = OTD_UART_STATUS_PASS;
+		}
+		else
+		{
+			uart_status = OTD_UART_STATUS_FAIL;
+		}
+	}
+	if(uart == DEBUG_UART)
+	{
+		if(R_UART3_Send(buf,len) == MD_OK)
+		{
+			uart_status = OTD_UART_STATUS_PASS;
+		}
+		else
+		{
+			uart_status = OTD_UART_STATUS_FAIL;
+		}		
+	}
+	
+
+	return uart_status;
+}
+void OtdUart_DebugSend(const char *s)
+{
+	while(*s != '\0')
+	{
+		OtdUart_Send((uint8_t *__near)s++, 1,DEBUG_UART);
+		while(!debug_tx_pending);
+		debug_tx_pending = 0;
+	}
 }

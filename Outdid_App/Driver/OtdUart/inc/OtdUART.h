@@ -72,37 +72,11 @@ __inline Otd_Uart_Status OtdUart_Recieve(uint8_t *buf, uint16_t len)
 	return uart_status;	
 }
 //UART Tx
-__inline Otd_Uart_Status OtdUart_Send(uint8_t *buf, uint16_t len , uint8_t uart)
-{
-	Otd_Uart_Status uart_status = OTD_UART_STATUS_PASS;
-	
-	if(uart == GSM_UART)
-	{
-		if(R_UART1_Send(buf,len) == MD_OK)
-		{
-			uart_status = OTD_UART_STATUS_PASS;
-		}
-		else
-		{
-			uart_status = OTD_UART_STATUS_FAIL;
-		}
-	}
-	if(uart == DEBUG_UART)
-	{
-		if(R_UART3_Send(buf,len) == MD_OK)
-		{
-			uart_status = OTD_UART_STATUS_PASS;
-		}
-		else
-		{
-			uart_status = OTD_UART_STATUS_FAIL;
-		}		
-	}
-	
 
-	return uart_status;
-}
 void OtdUart_CallbackSend(void);
 void OtdUart_CallbackRecieve(void);
+Otd_Uart_Status OtdUart_Send(uint8_t *buf, uint16_t len , uint8_t uart);
+void OtdUart_DebugSend(const char *s);
+uint16_t OtdDelay_GetTicks(void);
 
 #endif
