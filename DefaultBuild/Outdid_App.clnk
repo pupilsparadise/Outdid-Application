@@ -7,7 +7,6 @@
 -Input=DefaultBuild\r_cg_cgc_user.obj
 -Input=DefaultBuild\r_cg_serial.obj
 -Input=DefaultBuild\r_cg_serial_user.obj
--Input=DefaultBuild\OtdCircularBuffer_App.obj
 -Input=DefaultBuild\r_cg_timer.obj
 -Input=DefaultBuild\r_cg_timer_user.obj
 -Input=DefaultBuild\OtdDelay.obj

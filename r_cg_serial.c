@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for Serial module.
-* Creation Date: 12-09-2023
+* Creation Date: 20-09-2023
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -92,9 +92,9 @@ void R_UART1_Create(void)
     /* Set INTST1 low priority */
     STPR11 = 1U;
     STPR01 = 1U;
-    /* Set INTSR1 hign priority */
-    SRPR11 = 0U;
-    SRPR01 = 0U;
+    /* Set INTSR1 low priority */
+    SRPR11 = 1U;
+    SRPR01 = 1U;
     SMR02 = _0020_SAU_SMRMN_INITIALVALUE | _0000_SAU_CLOCK_SELECT_CK00 | _0000_SAU_TRIGGER_SOFTWARE |
             _0002_SAU_MODE_UART | _0000_SAU_TRANSFER_END;
     SCR02 = _8000_SAU_TRANSMISSION | _0000_SAU_INTSRE_MASK | _0000_SAU_PARITY_NONE | _0080_SAU_LSB | _0010_SAU_STOP_1 |

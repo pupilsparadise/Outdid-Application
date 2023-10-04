@@ -1,4 +1,4 @@
-Renesas Optimizing Linker (W3.05.00 )             13-Sep-2023 23:54:27
+Renesas Optimizing Linker (W3.05.00 )             04-Oct-2023 19:07:22
 
 *** Options ***
 
@@ -13,7 +13,6 @@ Renesas Optimizing Linker (W3.05.00 )             13-Sep-2023 23:54:27
 -Input=DefaultBuild\r_cg_cgc_user.obj
 -Input=DefaultBuild\r_cg_serial.obj
 -Input=DefaultBuild\r_cg_serial_user.obj
--Input=DefaultBuild\OtdCircularBuffer_App.obj
 -Input=DefaultBuild\r_cg_timer.obj
 -Input=DefaultBuild\r_cg_timer_user.obj
 -Input=DefaultBuild\OtdDelay.obj
@@ -53,30 +52,30 @@ SECTION                            START      END         SIZE   ALIGN
                                   00000094  00000094         0   2
 .sdata
                                   00000080  00000080         0   2
+.data
+                                  00000094  000000a3        10   2
 .option_byte
                                   000000c0  000000c3         4   1
 .security_id
                                   000000c4  000000cd         a   1
 .monitor1
                                   000000ce  000000d7         a   1
-.data
-                                  000000d8  000002fb       224   2
 .text
-                                  000002fc  00000445       14a   1
+                                  000000d8  00000221       14a   1
 .textf
-                                  00000446  00000b97       752   1
+                                  00000222  00000ad3       8b2   1
 .RLIB
-                                  00000b98  000013cd       836   1
+                                  00000ad4  000013e0       90d   1
 .const
-                                  00003000  0000330a       30b   2
+                                  00003000  00003b2c       b2d   2
 .SLIB
-                                  0000330b  00004fd1      1cc7   1
+                                  00003b2d  000057f3      1cc7   1
 .monitor2
                                   0007fe00  0007ffff       200   1
 .bss
-                                  000f4700  000f479f        a0   2
+                                  000f4700  000f49ab       2ac   2
 .dataR
-                                  000f47a0  000f49c3       224   2
+                                  000f49ac  000f49bb        10   2
 .sbss
                                   000ffe20  000ffe20         0   2
 .sdataR

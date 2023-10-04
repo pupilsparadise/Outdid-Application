@@ -31,6 +31,7 @@ Includes
 ***********************************************************************************************************************/
 #include "OtdUART.h"
 #include "OtdCircularBuffer_App.h"
+#include "OtdGsm_App.h"
 /***********************************************************************************************************************
 Pragma directive
 ***********************************************************************************************************************/
@@ -40,12 +41,11 @@ Pragma directive
 #define GSM_UART_STOP()		R_UART1_Stop()
 #define DEBUG_UART_STOP()	R_UART3_Stop()
 
-volatile uint8_t rx_data;
-volatile uint8_t rx_flag = 0;
-
-extern uint8_t gsm_rx_data;
 extern uint8_t debug_tx_pending;
-extern OtdCircularBufferApp *gsm_rx_ptr;
+//TODO: -check
+volatile uint8_t GsmRxData = 0; 
+extern volatile uint16_t RxIndex;
+extern volatile char Gsm_RxBuffer[RX_BUFFER_LENGTH];
 /***********************************************************************************************************************
 Global variables and functions
 ***********************************************************************************************************************/
@@ -58,7 +58,7 @@ void OtdUart_Init(void)
 {
 	GSM_UART_INIT();
 	DEBUG_UART_INIT();
-	OtdUart_Recieve(&gsm_rx_data,1);	
+	OtdUart_Recieve((uint8_t * __near)&GsmRxData,1);	
 }
 
 /** @brief Uart Disable
@@ -85,8 +85,8 @@ void OtdUart_CallbackSend(void)
  */
 void OtdUart_CallbackRecieve(void)
 {
-	OtdCircularBufferApp_BuffStoreChar(gsm_rx_data,gsm_rx_ptr);
-	OtdUart_Recieve(&gsm_rx_data,1);
+	Gsm_RxBuffer[RxIndex++] = GsmRxData;
+	OtdUart_Recieve((uint8_t * __near)&GsmRxData,1);
 }
 
 Otd_Uart_Status OtdUart_Send(uint8_t *buf, uint16_t len , uint8_t uart)

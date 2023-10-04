@@ -30,9 +30,12 @@ Includes
 ***********************************************************************************************************************/
 #include "OtdDelay.h"
 #include "r_cg_timer.h"
+#include "OtdGsm_App.h"
 /***********************************************************************************************************************
 Pragma directive
 ***********************************************************************************************************************/
+extern OtdGsmApp_SubState_tst GsmSubState_st;
+
 volatile uint16_t time_out = 0;
 volatile static uint16_t delay_cnt = 0;
 /***********************************************************************************************************************
@@ -68,7 +71,8 @@ void OtdDelay_ms(uint16_t delay_ms)
 void OtdDelay_Callback1ms(void)
 {
 	delay_cnt++;
-	time_out++;
+	//time_out++;
+	GsmSubState_st.TimeOut--;
 }
 
 uint16_t OtdDelay_GetTicks(void)

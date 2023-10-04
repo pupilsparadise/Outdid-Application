@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements main function.
-* Creation Date: 12-09-2023
+* Creation Date: 20-09-2023
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -38,6 +38,7 @@ Includes
 #include "OtdUART.h"
 #include "OtdCircularBuffer_App.h"
 #include "OtdDelay.h"
+#include "OtdGsm_App.h"
 /* End user code. Do not edit comment generated here */
 #include "r_cg_userdefine.h"
 
@@ -53,8 +54,6 @@ Global variables and functions
 ***********************************************************************************************************************/
 /* Start user code for global. Do not edit comment generated here */
 uint8_t gsm_rx_data;
-char main_str[1] = 'a';
-char str_to_find[] = "hanuman";
 /* End user code. Do not edit comment generated here */
 void R_MAIN_UserInit(void);
 
@@ -70,13 +69,16 @@ void main(void)
     /* Start user code. Do not edit comment generated here */
 	//main init part
 	OtdDelay_Start();
-	OtdCircularBufferApp_Init();
-	//OtdUart_Recieve(&gsm_rx_data,1);
+	/*initialize UART1*/
+	OtdUart_Init();
+	//OtdCircularBufferApp_Init();
+	//OtdUart_Recieve(&gsm_rx_data,1);                                                                                                                    
+	OtdGsmApp_GsmStateInit();
 
-	while (1U)
+	while(1)
 	{
-		OtdGsmApp_MainProcessATCmd();
-		//OtdDelay_ms(1000);
+		OtdGsmApp_MainStateMachine();
+		//OtdDelay_ms(100);
 	}
 	/* End user code. Do not edit comment generated here */
 }
