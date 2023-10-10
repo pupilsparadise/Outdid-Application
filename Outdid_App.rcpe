@@ -108,6 +108,7 @@
           <Option>-I Driver\OtdUart\Inc</Option>
           <Option>-I Driver\OtdSpi</Option>
           <Option>-I Driver\OtdUart</Option>
+          <Option>-far_rom</Option>
           <Option>-c</Option>
         </CompileOptions>
         <AssembleOptions>
@@ -1904,26 +1905,26 @@
         &lt;cg_security7 Name="cg_security7" Value="00" /&gt;
         &lt;pior1_value Name="pior1_value" Value="00" /&gt;
         &lt;cg_security5 Name="cg_security5" Value="00" /&gt;
-        &lt;ocdstart Name="ocdstart" Value="7FE00" /&gt;
+        &lt;cg_crc_area Name="cg_crc_area" Value="00" /&gt;
+        &lt;rrm Name="rrm" Value="7FE00" /&gt;
         &lt;cg_security3 Name="cg_security3" Value="00" /&gt;
         &lt;cg_security0 Name="cg_security0" Value="00" /&gt;
         &lt;cg_security1 Name="cg_security1" Value="00" /&gt;
-        &lt;cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" /&gt;
         &lt;clock_option Name="clock_option" Value="F8" /&gt;
-        &lt;cg_security2 Name="cg_security2" Value="00" /&gt;
+        &lt;lvi_option Name="lvi_option" Value="FF" /&gt;
         &lt;pior_value Name="pior_value" Value="00" /&gt;
         &lt;cg_option Name="cg_option" Value="84" /&gt;
         &lt;cg_security8 Name="cg_security8" Value="00" /&gt;
         &lt;cg_security6 Name="cg_security6" Value="00" /&gt;
-        &lt;cg_security4 Name="cg_security4" Value="00" /&gt;
+        &lt;ocdstart Name="ocdstart" Value="7FE00" /&gt;
         &lt;cg_pms_value Name="cg_pms_value" Value="00" /&gt;
         &lt;cg_onchip Name="cg_onchip" Value="" /&gt;
-        &lt;cg_crc_area Name="cg_crc_area" Value="00" /&gt;
+        &lt;cg_security2 Name="cg_security2" Value="00" /&gt;
         &lt;cg_iawctl_value Name="cg_iawctl_value" Value="00" /&gt;
         &lt;gtraceused Name="gtraceused" Value="" /&gt;
-        &lt;lvi_option Name="lvi_option" Value="FF" /&gt;
+        &lt;cg_ocd_ram_size Name="cg_ocd_ram_size" Value="512" /&gt;
         &lt;wdt_option Name="wdt_option" Value="EF" /&gt;
-        &lt;rrm Name="rrm" Value="7FE00" /&gt;
+        &lt;cg_security4 Name="cg_security4" Value="00" /&gt;
       &lt;/GlobleUserTag&gt;
     &lt;/TAG&gt;
   &lt;/DIR&gt;

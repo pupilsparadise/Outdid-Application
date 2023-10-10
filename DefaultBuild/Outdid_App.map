@@ -1,4 +1,4 @@
-Renesas Optimizing Linker (W3.05.00 )             04-Oct-2023 19:07:22
+Renesas Optimizing Linker (W3.05.00 )             11-Oct-2023 00:03:50
 
 *** Options ***
 
@@ -46,30 +46,30 @@ Renesas Optimizing Linker (W3.05.00 )             04-Oct-2023 19:07:22
 SECTION                            START      END         SIZE   ALIGN
 .vect
                                   00000000  0000007f        80   0
-.constf
-                                  00000080  00000093        14   2
 .init_array
-                                  00000094  00000094         0   2
+                                  00000080  00000080         0   2
 .sdata
                                   00000080  00000080         0   2
 .data
-                                  00000094  000000a3        10   2
+                                  00000082  00000091        10   2
 .option_byte
                                   000000c0  000000c3         4   1
 .security_id
                                   000000c4  000000cd         a   1
 .monitor1
                                   000000ce  000000d7         a   1
+.constf
+                                  000000d8  00001075       f9e   2
 .text
-                                  000000d8  00000221       14a   1
+                                  00001076  000011bf       14a   1
 .textf
-                                  00000222  00000ad3       8b2   1
+                                  000011c0  000020c9       f0a   1
 .RLIB
-                                  00000ad4  000013e0       90d   1
+                                  000020ca  000029ed       924   1
 .const
-                                  00003000  00003b2c       b2d   2
+                                  00003000  00003000         0   2
 .SLIB
-                                  00003b2d  000057f3      1cc7   1
+                                  00003000  00004cc9      1cca   1
 .monitor2
                                   0007fe00  0007ffff       200   1
 .bss

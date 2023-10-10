@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements main function.
-* Creation Date: 20-09-2023
+* Creation Date: 10-10-2023
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -74,6 +74,14 @@ void main(void)
 	//OtdCircularBufferApp_Init();
 	//OtdUart_Recieve(&gsm_rx_data,1);                                                                                                                    
 	OtdGsmApp_GsmStateInit();
+/*	
+	while(1)
+	{
+		OtdUart_DebugSend("tesgtint");
+		//R_UART3_Send(&a,1);
+		//OtdUart_Send((uint8_t *__near)&a,1,DEBUG_UART);
+		//OtdDelay_ms(100);
+	}*/
 
 	while(1)
 	{

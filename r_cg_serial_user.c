@@ -23,7 +23,7 @@
 * Device(s)    : R5F104ML
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for Serial module.
-* Creation Date: 20-09-2023
+* Creation Date: 10-10-2023
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -44,7 +44,7 @@ Pragma directive
 #pragma interrupt r_uart3_interrupt_send(vect=INTST3)
 /* Start user code for pragma. Do not edit comment generated here */
 uint8_t gsm_tx_pending = 0;//status for confirm all bytes have transmitted
-uint8_t debug_tx_pending = 0;//status for confirm all bytes have transmitted
+volatile uint8_t debug_tx_pending = 0;//status for confirm all bytes have transmitted
 /* End user code. Do not edit comment generated here */
 
 /***********************************************************************************************************************

@@ -32,6 +32,8 @@ Includes
 #include "OtdUART.h"
 #include "OtdCircularBuffer_App.h"
 #include "OtdGsm_App.h"
+#include <stdio.h>
+#include <string.h>
 /***********************************************************************************************************************
 Pragma directive
 ***********************************************************************************************************************/
@@ -41,7 +43,7 @@ Pragma directive
 #define GSM_UART_STOP()		R_UART1_Stop()
 #define DEBUG_UART_STOP()	R_UART3_Stop()
 
-extern uint8_t debug_tx_pending;
+extern volatile uint8_t debug_tx_pending;
 //TODO: -check
 volatile uint8_t GsmRxData = 0; 
 extern volatile uint16_t RxIndex;
@@ -89,13 +91,30 @@ void OtdUart_CallbackRecieve(void)
 	OtdUart_Recieve((uint8_t * __near)&GsmRxData,1);
 }
 
-Otd_Uart_Status OtdUart_Send(uint8_t *buf, uint16_t len , uint8_t uart)
+//UART Rx
+Otd_Uart_Status OtdUart_Recieve(uint8_t *buf, uint16_t len)
+{	
+	Otd_Uart_Status uart_status = OTD_UART_STATUS_PASS;
+	
+	if(R_UART1_Receive(buf,len) == MD_OK)
+	{
+		uart_status = OTD_UART_STATUS_PASS;
+	}
+	else
+	{
+		uart_status = OTD_UART_STATUS_FAIL;
+	}
+	
+	return uart_status;	
+}
+
+Otd_Uart_Status OtdUart_Send(const uint8_t *buf, uint16_t len , uint8_t uart)
 {
 	Otd_Uart_Status uart_status = OTD_UART_STATUS_PASS;
 	
 	if(uart == GSM_UART)
 	{
-		if(R_UART1_Send(buf,len) == MD_OK)
+		if(R_UART1_Send((uint8_t * __near)buf,len) == MD_OK)
 		{
 			uart_status = OTD_UART_STATUS_PASS;
 		}
@@ -106,7 +125,7 @@ Otd_Uart_Status OtdUart_Send(uint8_t *buf, uint16_t len , uint8_t uart)
 	}
 	if(uart == DEBUG_UART)
 	{
-		if(R_UART3_Send(buf,len) == MD_OK)
+		if(R_UART3_Send((uint8_t * __near)buf,len) == MD_OK)
 		{
 			uart_status = OTD_UART_STATUS_PASS;
 		}
@@ -119,11 +138,13 @@ Otd_Uart_Status OtdUart_Send(uint8_t *buf, uint16_t len , uint8_t uart)
 
 	return uart_status;
 }
-void OtdUart_DebugSend(const char *s)
+void OtdUart_DebugSend(volatile const char *s)
 {
-	while(*s != '\0')
+	const uint8_t debug_data[128];
+	sprintf(debug_data,"%s",s);
+	//while(*myData != '\0')
 	{
-		OtdUart_Send((uint8_t *__near)s++, 1,DEBUG_UART);
+		OtdUart_Send((uint8_t *__near)debug_data, strlen(s),DEBUG_UART);
 		while(!debug_tx_pending);
 		debug_tx_pending = 0;
 	}
