@@ -34,11 +34,13 @@ Includes
 #include "r_cg_serial.h"
 #include "r_cg_timer.h"
 /* Start user code for include. Do not edit comment generated here */
+#include <string.h>
 #include <stdio.h>
 #include "OtdUART.h"
 #include "OtdCircularBuffer_App.h"
 #include "OtdDelay.h"
 #include "OtdGsm_App.h"
+#include "OtdGsm_TcpApp.h"
 /* End user code. Do not edit comment generated here */
 #include "r_cg_userdefine.h"
 
@@ -54,6 +56,7 @@ Global variables and functions
 ***********************************************************************************************************************/
 /* Start user code for global. Do not edit comment generated here */
 uint8_t gsm_rx_data;
+char data[] = "Hello";
 /* End user code. Do not edit comment generated here */
 void R_MAIN_UserInit(void);
 
@@ -74,6 +77,8 @@ void main(void)
 	//OtdCircularBufferApp_Init();
 	//OtdUart_Recieve(&gsm_rx_data,1);                                                                                                                    
 	OtdGsmApp_GsmStateInit();
+	
+	OtdGsmTcpApp_ServerPrepareData(data, strlen(data));
 /*	
 	while(1)
 	{

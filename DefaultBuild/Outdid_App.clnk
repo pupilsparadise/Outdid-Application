@@ -11,6 +11,7 @@
 -Input=DefaultBuild\r_cg_timer_user.obj
 -Input=DefaultBuild\OtdDelay.obj
 -Input=DefaultBuild\OtdGsm_App.obj
+-Input=DefaultBuild\OtdGsm_TcpApp.obj
 -SECURITY_ID=00000000000000000000
 -DEVICE=C:\Program Files (x86)\Renesas Electronics\CS+\CC\Device\RL78\Devicefile\DR5F104ML.DVF
 -DEBug

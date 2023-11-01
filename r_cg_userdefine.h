@@ -34,5 +34,6 @@ User definitions
 ***********************************************************************************************************************/
 
 /* Start user code for function. Do not edit comment generated here */
+typedef unsigned long long       uint64_t;
 /* End user code. Do not edit comment generated here */
 #endif

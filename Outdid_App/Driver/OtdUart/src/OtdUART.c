@@ -108,7 +108,7 @@ Otd_Uart_Status OtdUart_Recieve(uint8_t *buf, uint16_t len)
 	return uart_status;	
 }
 
-Otd_Uart_Status OtdUart_Send(const uint8_t *buf, uint16_t len , uint8_t uart)
+Otd_Uart_Status OtdUart_Send(const __far uint8_t *buf, uint16_t len , uint8_t uart)
 {
 	Otd_Uart_Status uart_status = OTD_UART_STATUS_PASS;
 	
@@ -138,14 +138,17 @@ Otd_Uart_Status OtdUart_Send(const uint8_t *buf, uint16_t len , uint8_t uart)
 
 	return uart_status;
 }
-void OtdUart_DebugSend(volatile const char *s)
+void OtdUart_DebugSend(volatile const __far char *s)
 {
+	//TODO: check the altenative for sprintf
 	const uint8_t debug_data[128];
 	sprintf(debug_data,"%s",s);
 	//while(*myData != '\0')
-	{
+	//{
+		
 		OtdUart_Send((uint8_t *__near)debug_data, strlen(s),DEBUG_UART);
 		while(!debug_tx_pending);
 		debug_tx_pending = 0;
-	}
+	//}
+	
 }
