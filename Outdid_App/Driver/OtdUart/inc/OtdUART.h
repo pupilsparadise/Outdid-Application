@@ -54,15 +54,12 @@ typedef enum
 Global functions
 ***********************************************************************************************************************/
 void OtdUart_Init(void);
-
-
-//UART Tx
-
 void OtdUart_CallbackSend(void);
 void OtdUart_CallbackRecieve(void);
 Otd_Uart_Status OtdUart_Send(const uint8_t *buf, uint16_t len , uint8_t uart);
 Otd_Uart_Status OtdUart_Recieve(uint8_t *buf, uint16_t len);
 void OtdUart_DebugSend(volatile const char *s);
 uint16_t OtdDelay_GetTicks(void);
+void OtdUart_IsDataAvailable(void);
 
 #endif

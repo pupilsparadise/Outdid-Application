@@ -4,6 +4,7 @@
 #include "OtdUART.h"
 #include "OtdDelay.h"
 #include "OtdGsm_TcpApp.h"
+#include "OtdCircBuff_App.h"
 
 
 
@@ -48,7 +49,30 @@ uint64_t OtdGsmApp_ConvertCharToInteger(const char *ptr, uint8_t length, uint8_t
 	}
 	return variable;
 }
-
+uint8_t OtdGsmApp_CsqValue;
+static uint8_t OtdGsmApp_CaptureSignalStrength(uint8_t *local_buf, uint8_t fetch_len)
+{
+	uint8_t CSQ_Flag = 0, i, CSQ_Value = 0;
+	
+	for(i=0; i<=fetch_len; i++)
+	{
+		if(CSQ_Flag) 
+		{
+			CSQ_Value = ((CSQ_Value * 10) + (local_buf[i] - 0x30));
+			if(local_buf[i+1] == 0x2c)
+			{
+				break;
+			}
+		}
+		else if(local_buf[i] == 0x20) 
+		{
+			CSQ_Flag = 1;
+			CSQ_Value = 0;
+		}
+	}
+	
+	return CSQ_Value;
+}
 uint8_t OtdGsmApp_IsSubArrayPresent(volatile const char *array, uint16_t array_len, const char *subarray, uint16_t subarray_len, uint8_t save_reply, uint8_t *cmd_reply)
 {
 	OtdGsmApp_Status_ten match = Gsm_Ok;
@@ -92,7 +116,7 @@ uint8_t OtdGsmApp_IsSubArrayPresent(volatile const char *array, uint16_t array_l
 
 void OtdGsmApp_SendATCommand(const char *s)
 { 
-	const uint8_t debug_data[128];
+	const uint8_t debug_data[512];
 	sprintf(debug_data,"%s",s);
 	/*
 	while(*s != '\0')
@@ -107,7 +131,6 @@ void OtdGsmApp_SendATCommand(const char *s)
 	gsm_tx_pending = 0;
 }
 
-
 uint8_t local_rx_buffer[RX_BUFFER_LENGTH];
 uint64_t fetched_ICCID;
 static OtdGsmApp_Status_ten OtdGsmApp_GsmRxProcess(OtdGsmApp_SubState_ten rx_state)
@@ -119,6 +142,8 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmRxProcess(OtdGsmApp_SubState_ten rx_sta
 	volatile OtdGsmApp_Status_ten Status = Gsm_Nok;
 	//uint32_t fetched_ICCID;
 	
+	OtdUart_IsDataAvailable();//check if any data is available in rx buffer
+	
 	if(RxIndex > 0)
 	{
 		#if GSM_DEBUG
@@ -128,6 +153,40 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmRxProcess(OtdGsmApp_SubState_ten rx_sta
 		
 		switch(rx_state)
 		{
+			case GSM_RESET:
+					#if GSM_DEBUG
+					OtdUart_DebugSend("GSM_DEBUG >> GSM Rx response====Processing AT+RESET command=====\n");
+					#endif	
+					
+					expected_reply = "Call Ready";//update expected reply
+					
+					if(OtdGsmApp_IsSubArrayPresent(Gsm_RxBuffer,RxIndex,expected_reply,strlen(expected_reply),0,local_rx_buffer) == Gsm_Ok)
+					{
+						#if GSM_DEBUG
+						OtdUart_DebugSend("GSM_DEBUG >> GSM Rx response====Required Response Present=====\n");
+						#endif	
+						
+						Status = Gsm_Ok;
+					}
+					else
+					{
+						if(GsmSubState_st.TimeOut <= 0)
+						{
+							#if GSM_DEBUG
+							OtdUart_DebugSend("GSM_DEBUG >> GSM Rx response====Required Response Not Present & Timeout=====\n");
+							#endif	
+							Status = Gsm_Busy;
+						}
+						else
+						{
+							#if GSM_DEBUG
+							OtdUart_DebugSend("GSM_DEBUG >> GSM Rx response====Required Response is busy & No Timeout=====\n");
+							#endif
+							Status = Gsm_Busy;
+						}
+					}
+					
+					break;			
 
 			case GSM_AT:
 					#if GSM_DEBUG
@@ -315,7 +374,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmRxProcess(OtdGsmApp_SubState_ten rx_sta
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Rx response====Processing GSM_STATE_SIGNAL_QUALITY command=====\n");
 					#endif	
 					
-					expected_reply = "+CSQ:";//update expected reply 
+					expected_reply = "OK";//update expected reply 
 					
 					//save the reply for verification
 					if(OtdGsmApp_IsSubArrayPresent(Gsm_RxBuffer,RxIndex,expected_reply,strlen(expected_reply),1,local_rx_buffer) == Gsm_Ok)
@@ -325,6 +384,8 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmRxProcess(OtdGsmApp_SubState_ten rx_sta
 						#endif	
 						
 						//TODO: add function to check the Signal Quality is feasible or not
+						OtdGsmApp_CsqValue = OtdGsmApp_CaptureSignalStrength(local_rx_buffer,20);
+						
 						
 						#if GSM_DEBUG
 						//fetched_ICCID = OtdGsmApp_ConvertCharToInteger(&local_rx_buffer[18],19, FALSE);
@@ -468,7 +529,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmRxProcess(OtdGsmApp_SubState_ten rx_sta
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Rx response====Processing GSM_COPS_CHECK command=====\n");
 					#endif	
 					
-					expected_reply = "Vi";//update expected reply //TODO: store the opearator name
+					expected_reply = "OK";//update expected reply //TODO: store the opearator name
 					
 					//save the reply for verification
 					if(OtdGsmApp_IsSubArrayPresent(Gsm_RxBuffer,RxIndex,expected_reply,strlen(expected_reply),0,local_rx_buffer) == Gsm_Ok)
@@ -535,12 +596,26 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmInitCmdProcess(void)
 	
 	switch(GsmSubState_st.Current_en)
 	{
+		case GSM_RESET:
+				if(!GsmSubState_st.CmdSendFlag)
+				{
+					OtdGsmApp_ClearRxBuffer();//Clear Rx Buffer 
+					OtdGsmApp_SendATCommand("AT+RESET\r\n");
+					GsmSubState_st.TimeOut = RX_TIMEOUT;
+					#if GSM_DEBUG
+					OtdUart_DebugSend("GSM_DEBUG >> GSM Sub-StateMachine====AT+RESET=====send\n");
+					#endif	
+					
+					GsmSubState_st.CmdSendFlag = 1;
+				}
+				
+				break;		
 		case GSM_AT:
 				if(!GsmSubState_st.CmdSendFlag)
 				{
 					OtdGsmApp_ClearRxBuffer();//Clear Rx Buffer 
 					OtdGsmApp_SendATCommand("AT\r\n");
-					//GsmSubState_st.TimeOut = RX_TIMEOUT;
+					GsmSubState_st.TimeOut = RX_TIMEOUT;
 					#if GSM_DEBUG
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Sub-StateMachine====AT=====send\n");
 					#endif	
@@ -554,7 +629,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmInitCmdProcess(void)
 				{
 					OtdGsmApp_ClearRxBuffer();//Clear Rx Buffer 
 					OtdGsmApp_SendATCommand("ATI\r\n");
-					//GsmSubState_st.TimeOut = RX_TIMEOUT;
+					GsmSubState_st.TimeOut = RX_TIMEOUT;
 					#if GSM_DEBUG
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Sub-StateMachine====ATI=====send\n");
 					#endif	
@@ -567,7 +642,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmInitCmdProcess(void)
 				{
 					OtdGsmApp_ClearRxBuffer();//Clear Rx Buffer 
 					OtdGsmApp_SendATCommand("AT+GSN\r\n");
-					//GsmSubState_st.TimeOut = RX_TIMEOUT;
+					GsmSubState_st.TimeOut = RX_TIMEOUT;
 					#if GSM_DEBUG
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Sub-StateMachine====AT+GSN=====send\n");
 					#endif	
@@ -581,7 +656,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmInitCmdProcess(void)
 				{
 					OtdGsmApp_ClearRxBuffer();//Clear Rx Buffer 
 					OtdGsmApp_SendATCommand("AT+CPIN?\r\n");
-					//GsmSubState_st.TimeOut = RX_TIMEOUT;
+					GsmSubState_st.TimeOut = RX_TIMEOUT;
 					#if GSM_DEBUG
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Sub-StateMachine====AT+CPIN?=====send\n");
 					#endif	
@@ -595,7 +670,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmInitCmdProcess(void)
 				{
 					OtdGsmApp_ClearRxBuffer();//Clear Rx Buffer 
 					OtdGsmApp_SendATCommand("AT+ICCID\r\n");//update the command
-					//GsmSubState_st.TimeOut = RX_TIMEOUT;
+					GsmSubState_st.TimeOut = RX_TIMEOUT;
 					#if GSM_DEBUG
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Sub-StateMachine====AT+ICCID=====send\n");
 					#endif	
@@ -609,7 +684,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmInitCmdProcess(void)
 				{
 					OtdGsmApp_ClearRxBuffer();//Clear Rx Buffer 
 					OtdGsmApp_SendATCommand("AT+CSQ\r\n");//update the command
-					//GsmSubState_st.TimeOut = RX_TIMEOUT;
+					GsmSubState_st.TimeOut = RX_TIMEOUT;
 					#if GSM_DEBUG
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Sub-StateMachine====AT+CSQ=====send\n");
 					#endif	
@@ -624,7 +699,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmInitCmdProcess(void)
 				{
 					OtdGsmApp_ClearRxBuffer();//Clear Rx Buffer 
 					OtdGsmApp_SendATCommand("AT+CNMI=2,1,0,0,0\r\n");//update the command
-					//GsmSubState_st.TimeOut = RX_TIMEOUT;
+					GsmSubState_st.TimeOut = RX_TIMEOUT;
 					#if GSM_DEBUG
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Sub-StateMachine====AT+CNMI=====send\n");
 					#endif	
@@ -638,7 +713,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmInitCmdProcess(void)
 				{
 					OtdGsmApp_ClearRxBuffer();//Clear Rx Buffer 
 					OtdGsmApp_SendATCommand("AT+CGQMIN?\r\n");//update the command
-					//GsmSubState_st.TimeOut = RX_TIMEOUT;
+					GsmSubState_st.TimeOut = RX_TIMEOUT;
 					#if GSM_DEBUG
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Sub-StateMachine====AT+CGQMIN=====send\n");
 					#endif	
@@ -652,7 +727,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmInitCmdProcess(void)
 				{
 					OtdGsmApp_ClearRxBuffer();//Clear Rx Buffer 
 					OtdGsmApp_SendATCommand("AT+COPS=3,0\r\n");//update the command
-					//GsmSubState_st.TimeOut = RX_TIMEOUT;
+					GsmSubState_st.TimeOut = RX_TIMEOUT;
 					#if GSM_DEBUG
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Sub-StateMachine====AT+COPS=====send\n");
 					#endif	
@@ -665,7 +740,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmInitCmdProcess(void)
 				{
 					OtdGsmApp_ClearRxBuffer();//Clear Rx Buffer 
 					OtdGsmApp_SendATCommand("AT+COPS?\r\n");//update the command
-					//GsmSubState_st.TimeOut = RX_TIMEOUT;
+					GsmSubState_st.TimeOut = RX_TIMEOUT;
 					#if GSM_DEBUG
 					OtdUart_DebugSend("GSM_DEBUG >> GSM Sub-StateMachine====AT+COPS_CHECK=====send\n");
 					#endif	
@@ -692,7 +767,7 @@ static OtdGsmApp_Status_ten OtdGsmApp_GsmInitCmdProcess(void)
 		if(GsmSubState_st.Trials > 0)
 		{
 			GsmSubState_st.Trials--;
-			GsmSubState_st.TimeOut = RX_TIMEOUT;//reset the timer count
+			//GsmSubState_st.TimeOut = RX_TIMEOUT;//reset the timer count
 			GsmSubState_st.CmdSendFlag = 0; // Reset command flag
 			if(status_e == Gsm_RxTimeOut)
 			{
@@ -756,7 +831,7 @@ void OtdGsmApp_MainStateMachine(void)
 				if(Status == Gsm_SubStateCompleted)
 				{
 					GsmMainState_st.Previous_en = GsmMainState_st.Current_en;//update the previous while changing to next state
-					GsmMainState_st.Current_en = Tcp_Init;
+					GsmMainState_st.Current_en = Tcp_Init;//move to next state
 					#if GSM_DEBUG
 					OtdUart_DebugSend("GSM_DEBUG >> =======================================\n");
 					OtdUart_DebugSend("GSM_DEBUG >> 		GSM INIT FINISHED      \n");
@@ -781,7 +856,7 @@ void OtdGsmApp_MainStateMachine(void)
 				if(Status == Gsm_SubStateCompleted)
 				{
 					GsmMainState_st.Previous_en = GsmMainState_st.Current_en;//update the previous while changing to next state
-					GsmMainState_st.Current_en = Tcp_Send;
+					GsmMainState_st.Current_en = Tcp_Send;//move to next state
 					#if GSM_DEBUG
 					OtdUart_DebugSend("TCP_DEBUG >> =======================================\n");
 					OtdUart_DebugSend("TCP_DEBUG >> 		TCP INIT FINISHED      \n");
@@ -821,7 +896,7 @@ void OtdGsmApp_GsmStateInit(void)
 	GsmMainState_st.Previous_en = GsmMainState_st.Current_en;
 	
 	//sub state default init
-	GsmSubState_st.Current_en = GSM_AT;
+	GsmSubState_st.Current_en = GSM_RESET;
 	GsmSubState_st.Previous_en = GsmSubState_st.Current_en;
 	GsmSubState_st.Trials = MAX_TRIALS;
 	GsmSubState_st.TimeOut = RX_TIMEOUT;

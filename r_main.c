@@ -37,7 +37,7 @@ Includes
 #include <string.h>
 #include <stdio.h>
 #include "OtdUART.h"
-#include "OtdCircularBuffer_App.h"
+#include "OtdCircBuff_App.h"
 #include "OtdDelay.h"
 #include "OtdGsm_App.h"
 #include "OtdGsm_TcpApp.h"
@@ -56,7 +56,7 @@ Global variables and functions
 ***********************************************************************************************************************/
 /* Start user code for global. Do not edit comment generated here */
 uint8_t gsm_rx_data;
-char data[] = "Hello";
+char data[] = "Jai Sri Ram";
 /* End user code. Do not edit comment generated here */
 void R_MAIN_UserInit(void);
 
@@ -73,8 +73,8 @@ void main(void)
 	//main init part
 	OtdDelay_Start();
 	/*initialize UART1*/
-	OtdUart_Init();
-	//OtdCircularBufferApp_Init();
+	//OtdUart_Init();
+	OtdCircBuffApp_Init();
 	//OtdUart_Recieve(&gsm_rx_data,1);                                                                                                                    
 	OtdGsmApp_GsmStateInit();
 	

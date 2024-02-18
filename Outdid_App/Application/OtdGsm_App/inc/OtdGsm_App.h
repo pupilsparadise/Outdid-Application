@@ -4,7 +4,7 @@
 #include "r_cg_macrodriver.h"
 #include "r_cg_userdefine.h"
 
-#define RX_BUFFER_LENGTH 256
+#define RX_BUFFER_LENGTH 512
 
 #define GSM_DEBUG	1U
 
@@ -17,13 +17,12 @@
 #define NOT_READY	0U
 #define READY		1U
 
-#define GSM_INIT_MAX_COMMAND 10U //number of AT commands used for GSM initialisation, value should be changed if more AT commands added
-#define TCP_INIT_MAX_COMMAND 12U
-#define TCP_SEND_MAX_COMMAND 16U
+#define DISCONNECTED	0U
+#define CONNECTED	1U
 
-#define SERVER_IP_ADDRESS 	"122.166.210.142"
-#define SERVER_PORT		"8050"
-
+#define GSM_INIT_MAX_COMMAND 11U //number of AT commands used for GSM initialisation, value should be changed if more AT commands added
+#define TCP_INIT_MAX_COMMAND 13U
+#define TCP_SEND_MAX_COMMAND 20U
 typedef enum
 {
 	Gsm_Busy =0,
@@ -47,7 +46,8 @@ typedef enum
 typedef enum
 {
 	/**< Reinitializing the GSM module */
-	GSM_AT = 0,			/**< ----GSM state 1	(Send AT for checking) 			*/
+	GSM_RESET = 0,			/**< ----GSM state 1	(Reset the GSM Modem) 			*/
+	GSM_AT,				/**< ----GSM state 1	(Send AT for checking) 			*/
 	GSM_ATI,			/**< ----GSM state 2	(Product identification)		*/
 	GSM_GSN,			/**< ----GSM state 3	(Request IMEI)				*/
 	GSM_STATE_CHECK_PIN,		/**< ----GSM state 4	(Check if PIN) 				*/
@@ -74,13 +74,13 @@ typedef enum
 	GSM_COPS_CHECK,
 	
 	/**< TCP Init Command */
-	TCP_QICSGP,			/**< ----GSM state 1	(Send AT for checking) 			*/
-	TCP_CMGF,
+	//TCP_QICSGP,			/**< ----GSM state 1	(Send AT for checking) 			*/
+	//TCP_CMGF,
 	/**< TCP Open and send Command */
-	TCP_NETOPEN,
-	TCP_CIPOPEN,
-	TCP_PREPARE_SEND,
-	TCP_SEND_DATA,
+	//TCP_NETWORK_CONNECT,
+	//TCP_SERVER_CONNECT,
+	//TCP_PREPARE_SEND,
+	//TCP_SEND_DATA,
 	
 	/**< Commands for sending an SMS */
 	//GSM_CMGF,											/**< For setting SMS text mode 								*/
@@ -101,11 +101,11 @@ typedef struct
 
 typedef struct
 {
-	OtdGsmApp_SubState_ten Current_en; //stores the current state
-	OtdGsmApp_SubState_ten Previous_en;//stores the previous state
-	volatile uint8_t CmdSendFlag;
-	volatile uint8_t Trials;//tracks the number of times the frame executed
-	volatile int16_t TimeOut; // tracks the time
+	OtdGsmApp_SubState_ten Current_en; 	//stores the current state
+	OtdGsmApp_SubState_ten Previous_en;	//stores the previous state
+	volatile uint8_t CmdSendFlag;		//flag to make sure command is send one time
+	volatile uint8_t Trials;		//tracks the number of times the frame executed
+	volatile int16_t TimeOut; 		// tracks the time
 }OtdGsmApp_SubState_tst;
 
 void OtdGsmApp_GsmStateInit(void);

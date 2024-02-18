@@ -30,7 +30,7 @@
 Includes
 ***********************************************************************************************************************/
 #include "OtdUART.h"
-#include "OtdCircularBuffer_App.h"
+#include "OtdCircBuff_App.h"
 #include "OtdGsm_App.h"
 #include <stdio.h>
 #include <string.h>
@@ -81,13 +81,14 @@ void OtdUart_CallbackSend(void)
 {
 
 }
-/** @brief Uart Disable
+/** @brief Uart Recieve callback
  *  @param void
  *  @return Void.
  */
 void OtdUart_CallbackRecieve(void)
 {
-	Gsm_RxBuffer[RxIndex++] = GsmRxData;
+	//Gsm_RxBuffer[RxIndex++] = GsmRxData;
+	OtdCircBuffApp_CircBuffPush(&GsmRxData);
 	OtdUart_Recieve((uint8_t * __near)&GsmRxData,1);
 }
 
@@ -151,4 +152,24 @@ void OtdUart_DebugSend(volatile const __far char *s)
 		debug_tx_pending = 0;
 	//}
 	
+}
+
+
+void OtdUart_IsDataAvailable(void)
+{	
+	uint16_t rx_data_count;//number of data recieved
+	unsigned char rx_data;
+	
+	rx_data_count = OtdCircBuffApp_IsData();
+	
+	if(rx_data_count > 0)
+	{
+		/*data available*/
+		/*copy the data from Circular buffer to Global Rx buffer*/
+		while(OtdCircBuffApp_BufferPop(&rx_data) == OtdCircBuffApp_Ok)
+		{
+			Gsm_RxBuffer[RxIndex++] = rx_data;
+		}
+		
+	}
 }
