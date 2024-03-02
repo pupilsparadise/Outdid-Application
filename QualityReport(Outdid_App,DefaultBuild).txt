@@ -1,5 +1,5 @@
 QualityReport
-18 February 2024 00:54:28
+18 February 2024 20:31:04
 
 ------ Start build(Outdid_App, DefaultBuild) ------
 ------ Build ended(Error:0, Warning:0)(Outdid_App, DefaultBuild) ------
@@ -35,13 +35,13 @@ G:\Outdid\Outdid_Workspace\Outdid-Application\DefaultBuild\Outdid_App.mot: 809d5
  C:\Program Files (x86)\Renesas Electronics\CS+\CC
 *Memory Usage
  *Private Working Set
-  261 MB
+  251 MB
  *Number of GDI Objects
-  2183
+  2226
  *Number of USER Objects
-  1061
+  1079
  *Opened Files
-  9 editors, 9 files, 84 KB
+  12 editors, 12 files, 91 KB
 
 --- Build Tool Plug-in Information ---
 RH850 Build tool CC-RH Plug-in
